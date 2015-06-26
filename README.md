@@ -2,6 +2,16 @@
 
 Here's a simple python API to access your Google Analytics data.
 
+
+## Dependencies
+
+We use buildout to handle all the dependencies.  Just run:
+
+    python bootstrap.py
+    ./bin/buildout
+    export PATH=$PWD/bin:$PATH
+
+
 ## Example
 
     import gascrape
@@ -19,6 +29,7 @@ Here's a simple python API to access your Google Analytics data.
         'hl': "en_US",
         'authuser': "0",
     }
+
 
 ## FAQ
 
