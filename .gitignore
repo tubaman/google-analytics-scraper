@@ -1,0 +1,11 @@
+*.swp
+*.pyc
+
+*.log
+*.pkl
+saved_session
+
+.installed.cfg
+bin
+parts
+eggs
