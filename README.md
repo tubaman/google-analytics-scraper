@@ -7,28 +7,32 @@ Here's a simple python API to access your Google Analytics data.
 
 We use buildout to handle all the dependencies.  Just run:
 
-    python bootstrap.py
-    ./bin/buildout
-    export PATH=$PWD/bin:$PATH
+```shell
+python bootstrap.py
+./bin/buildout
+export PATH=$PWD/bin:$PATH
+```
 
 
 ## Example
 
-    import gascrape
+```python
+import gascrape
 
-    session = gascrape.Session()
-    session.login(username, password)
-    data = session.get_page({
-        'explorer-table.filter': "",
-        'explorer-table.plotKeys': "[]",
-        'explorer-table.rowStart': "0",
-        'explorer-table.rowCount': "10",
-        'id': "content-pages",
-        'ds': "a2498192w4533326p4663517",
-        'cid': "explorer-motionChart,explorer-table,explorer-table,timestampMessage",
-        'hl': "en_US",
-        'authuser': "0",
-    }
+session = gascrape.Session()
+session.login(username, password)
+data = session.get_page({
+    'explorer-table.filter': "",
+    'explorer-table.plotKeys': "[]",
+    'explorer-table.rowStart': "0",
+    'explorer-table.rowCount': "10",
+    'id': "content-pages",
+    'ds': "a2498192w4533326p4663517",
+    'cid': "explorer-motionChart,explorer-table,explorer-table,timestampMessage",
+    'hl': "en_US",
+    'authuser': "0",
+}
+```
 
 
 ## FAQ
