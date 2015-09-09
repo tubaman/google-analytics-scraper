@@ -70,8 +70,10 @@ class Session(object):
                 driver.find_element_by_id("Passwd").send_keys(password)
             except:
                 driver.find_element_by_id("next").click()
-                driver.find_element_by_id("Passwd").clear()
-                driver.find_element_by_id("Passwd").send_keys(password)
+                condition = EC.visibility_of_element_located((By.ID, "Passwd"))
+                passwd = WebDriverWait(driver, 5).until(condition)
+                passwd.clear()
+                passwd.send_keys(password)
             driver.find_element_by_id("signIn").click()
             self.s = requests.Session()
             copy_cookies_to_session(driver, self.s)
