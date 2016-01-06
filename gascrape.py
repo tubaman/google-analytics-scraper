@@ -58,11 +58,9 @@ class Session(object):
     def login(self, username, password):
         driver = setup_webdriver()
         try:
-            url = "http://www.google.com/analytics/"
+            url = "https://analytics.google.com/analytics/web"
             #url = "http://www.google.com/analytics/ce/nrs/?utm_expid=71218119-7.lBgmrTO8R3uEDwsxNxa_Nw.2"
             driver.get(url)
-            sign_in = self.find_sign_in(driver)
-            sign_in.click()
             driver.find_element_by_id("Email").clear()
             driver.find_element_by_id("Email").send_keys(username)
             try:
