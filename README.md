@@ -31,7 +31,7 @@ data = session.get_page({
     'cid': "explorer-motionChart,explorer-table,explorer-table,timestampMessage",
     'hl': "en_US",
     'authuser': "0",
-}
+})
 ```
 
 
