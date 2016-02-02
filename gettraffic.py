@@ -5,7 +5,7 @@ import csv
 
 import gascrape
 
-def get_pageviews(session, start_date, end_date):
+def get_pageviews(session, ds, start_date, end_date):
     start_date_txt = start_date.strftime("%Y%m%d")
     end_date_txt = end_date.strftime("%Y%m%d")
 
@@ -15,7 +15,7 @@ def get_pageviews(session, start_date, end_date):
         'overview-graphOptions.selected': "analytics.nthMonth",
         'overview-graphOptions.primaryConcept': "analytics.pageviews",
         'id': "defaultid",
-        'ds': "a2498192w4533326p4663517",
+        'ds': ds,
         'cid': "overview,reportHeader,timestampMessage",
         'hl': "en_US",
         'authuser': "0",
@@ -35,13 +35,18 @@ def main(argv=None):
     session = gascrape.Session()
     session.login(username, password)
 
+    dss = {
+        'ki.com': 'a2498192w4533326p4663517',
+        'ki.ca': 'a49179915w80865222p83686628',
+    }
+
     writer = csv.writer(sys.stdout)
     writer.writerow(["month", "page views"])
     for month in range(1, 13):
         start_date = datetime.date(2015, month, 1)
         end_day = calendar.monthrange(start_date.year, start_date.month)[1]
         end_date = datetime.date(2015, month, end_day)
-        pageviews = get_pageviews(session, start_date, end_date)
+        pageviews = get_pageviews(session, dss['ki.com'], start_date, end_date)
         writer.writerow([start_date.strftime("%m/%Y"), pageviews])
 
 
