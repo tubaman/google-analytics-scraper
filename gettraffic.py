@@ -40,12 +40,16 @@ def main(argv=None):
         'ki.ca': 'a49179915w80865222p83686628',
     }
 
+    today = datetime.date.today()
+    year = 2016
     writer = csv.writer(sys.stdout)
     writer.writerow(["month", "page views"])
     for month in range(1, 13):
-        start_date = datetime.date(2015, month, 1)
+        start_date = datetime.date(year, month, 1)
         end_day = calendar.monthrange(start_date.year, start_date.month)[1]
-        end_date = datetime.date(2015, month, end_day)
+        end_date = datetime.date(year, month, end_day)
+        if end_date > today:
+            continue
         pageviews = get_pageviews(session, dss['ki.com'], start_date, end_date)
         writer.writerow([start_date.strftime("%m/%Y"), pageviews])
 
