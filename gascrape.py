@@ -82,7 +82,7 @@ class Session(object):
             driver.quit()
 
     def is_logged_in(self):
-        url = "https://www.google.com/analytics/web/"
+        url = "https://analytics.google.com/analytics/web/"
         response = self.s.get(url, params={'hl': 'en'})
         return "Reporting" in response.text
 
@@ -94,7 +94,7 @@ class Session(object):
         self.s.cookies = pickle.load(file)
 
     def get_csrf_token(self):
-        url = "https://www.google.com/analytics/web/"
+        url = "https://analytics.google.com/analytics/web/"
         response = self.s.get(url, params={'hl': 'en'})
         token = re.search('"token":{"value":"(.*?)"', response.text).group(1)
         return token
