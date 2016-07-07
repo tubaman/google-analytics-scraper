@@ -40,6 +40,7 @@ class Session(object):
 
     def __init__(self):
         self.s = None
+        self.base_url = "https://analytics.google.com/analytics/"
 
     def find_sign_in(self, driver):
         conditions = [
@@ -58,8 +59,7 @@ class Session(object):
     def login(self, username, password):
         driver = setup_webdriver()
         try:
-            url = "https://analytics.google.com/analytics/web"
-            #url = "http://www.google.com/analytics/ce/nrs/?utm_expid=71218119-7.lBgmrTO8R3uEDwsxNxa_Nw.2"
+            url = self.base_url + 'web/'
             driver.get(url)
             driver.find_element_by_id("Email").clear()
             driver.find_element_by_id("Email").send_keys(username)
@@ -75,6 +75,7 @@ class Session(object):
             driver.find_element_by_id("signIn").click()
             self.s = requests.Session()
             copy_cookies_to_session(driver, self.s)
+            assert self.is_logged_in()
         except:
             driver.save_screenshot('/tmp/ga_problem.png')
             raise
@@ -82,7 +83,7 @@ class Session(object):
             driver.quit()
 
     def is_logged_in(self):
-        url = "https://analytics.google.com/analytics/web/"
+        url = self.base_url + 'web/'
         response = self.s.get(url, params={'hl': 'en'})
         return "Reporting" in response.text
 
@@ -94,7 +95,7 @@ class Session(object):
         self.s.cookies = pickle.load(file)
 
     def get_csrf_token(self):
-        url = "https://analytics.google.com/analytics/web/"
+        url = self.base_url + 'web/'
         response = self.s.get(url, params={'hl': 'en'})
         token = re.search('"token":{"value":"(.*?)"', response.text).group(1)
         return token
@@ -104,12 +105,12 @@ class Session(object):
         data = {
             'token': csrf_token,
         }
-        url = "https://www.google.com/analytics/web/getPage"
+        url = self.base_url + "web/getPage"
         response = self.s.post(url, data=data, params=params)
         return response.json()
 
     def get_data(self, params):
-        url = "https://www.google.com/analytics/realtime/realtime/getData"
+        url = self.base_url + "realtime/realtime/getData"
         response = self.s.get(url, params=params)
         return response.json()
 
